@@ -36,6 +36,7 @@ jobs:
 
       # run tests!
       - run: npm config set prefix ~/npm_prefix
+      - run: export PATH=~/npm_prefix/bin:$PATH
       - run: npm i -g nativescript
       - run: tns usage-reporting disable
       - run: tns error-reporting disable
