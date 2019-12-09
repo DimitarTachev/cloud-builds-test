@@ -17,9 +17,27 @@ jobs:
     working_directory: ~/repo
 
     steps:
-      - checkout
 
-      # Download and cache dependencies
+      # GLOBAL OPERATIONS
+      
+      # setup NPM
+      - run: echo 'export PATH=~/npm_prefix/bin:$PATH' >> $BASH_ENV 
+      - run: npm config set prefix ~/npm_prefix
+      
+      # setup TNS
+      # TODO: CACHE
+      - run: npm i -g nativescript
+      - run: tns usage-reporting disable
+      - run: tns error-reporting disable
+      
+      
+      
+      # LOCAL OPERATIONS
+      
+      - checkout
+      
+
+      # NODE PACKAGES
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
@@ -27,18 +45,17 @@ jobs:
             - v1-dependencies-
 
       - run: npm install
-
+      - run: npm rebuild
+      - run: tns build android
+      
+      
+      
+      
+      
+      
+      # FINALIZE
       - save_cache:
           # TODO: add platforms cache?
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
-      # run tests!
-      - run: echo $BASH_ENV
-      - run: echo 'export PATH=~/npm_prefix/bin:$PATH' >> $BASH_ENV 
-      - run: npm config set prefix ~/npm_prefix
-      - run: npm i -g nativescript
-      - run: tns usage-reporting disable
-      - run: tns error-reporting disable
-      - run: tns build android
