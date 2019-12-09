@@ -30,8 +30,7 @@ jobs:
       - run: tns usage-reporting disable
       - run: tns error-reporting disable
       
-      
-      
+           
       # LOCAL OPERATIONS
       
       - checkout
@@ -43,19 +42,18 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
-
       - run: npm install
       - run: npm rebuild
+      
+      
+      # TNS BUILD
       - run: tns build android
+            
       
-      
-      
-      
-      
-      
-      # FINALIZE
+      # CACHE
       - save_cache:
           # TODO: add platforms cache?
           paths:
             - node_modules
+            - ~/.gradle/
           key: v1-dependencies-{{ checksum "package.json" }}
