@@ -41,4 +41,4 @@ jobs:
       - run: npm i -g nativescript
       - run: tns usage-reporting disable
       - run: tns error-reporting disable
-      - run: tns doctor
+      - run: tns build android
