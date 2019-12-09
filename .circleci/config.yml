@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     environment:
-      PATH: ~/npm_prefix/bin:$PATH
+      BASH_ENV: ~/.bashrc
     docker:
       # specify the version you desire here
       - image: circleci/android:api-29-node
@@ -37,6 +37,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
 
       # run tests!
+      - run: echo 'export PATH=~/npm_prefix/bin:$PATH' >> $BASH_ENV 
       - run: npm config set prefix ~/npm_prefix
       - run: npm i -g nativescript
       - run: tns usage-reporting disable
