@@ -7,7 +7,7 @@ jobs:
   build:
     branches:
       only:
-        - master
+        - branch3
     docker:
       # specify the version you desire here
       - image: circleci/android:api-29-node
@@ -28,7 +28,7 @@ jobs:
       - run: npm config set prefix ~/npm_prefix
       
       # setup TNS
-      # TODO: CACHE
+      # TODO: CACHE branch3
       - run: npm i -g nativescript
       - run: tns usage-reporting disable
       - run: tns error-reporting disable
