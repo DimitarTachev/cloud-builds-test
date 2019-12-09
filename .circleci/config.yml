@@ -5,6 +5,8 @@
 version: 2
 jobs:
   build:
+    environment:
+      PATH: ~/npm_prefix/bin:$PATH
     docker:
       # specify the version you desire here
       - image: circleci/android:api-29-node
@@ -36,7 +38,6 @@ jobs:
 
       # run tests!
       - run: npm config set prefix ~/npm_prefix
-      - run: export PATH=~/npm_prefix/bin:$PATH
       - run: npm i -g nativescript
       - run: tns usage-reporting disable
       - run: tns error-reporting disable
