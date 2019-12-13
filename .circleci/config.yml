@@ -47,7 +47,7 @@ jobs:
 
       # Expose artifacts
       - store_artifacts:
-        path: ~/output
+          path: ~/output
 
       # CACHE
       - save_cache:
