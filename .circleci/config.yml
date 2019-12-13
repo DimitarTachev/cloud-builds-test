@@ -5,9 +5,6 @@
 version: 2
 jobs:
   build:
-    branches:
-      only:
-        - master
     docker:
       # specify the version you desire here
       - image: circleci/android:api-29-node
@@ -20,24 +17,21 @@ jobs:
     working_directory: ~/repo
 
     steps:
-
       # GLOBAL OPERATIONS
-      
+
       # setup NPM
-      - run: echo 'export PATH=~/npm_prefix/bin:$PATH' >> $BASH_ENV 
+      - run: echo 'export PATH=~/npm_prefix/bin:$PATH' >> $BASH_ENV
       - run: npm config set prefix ~/npm_prefix
-      
+
       # setup TNS
       # TODO: CACHE
       - run: npm i -g nativescript
       - run: tns usage-reporting disable
       - run: tns error-reporting disable
-      
-           
+
       # LOCAL OPERATIONS
-      
+
       - checkout
-      
 
       # NODE PACKAGES
       - restore_cache:
@@ -47,12 +41,14 @@ jobs:
             - v1-dependencies-
       - run: npm install
       - run: npm rebuild
-      
-      
+
       # TNS BUILD
-      - run: tns build android
-            
-      
+      - run: tns build android --copy-to ~/output/app.apk
+
+      # Expose artifacts
+      - store_artifacts:
+        path: ~/output
+
       # CACHE
       - save_cache:
           # TODO: add platforms cache?
