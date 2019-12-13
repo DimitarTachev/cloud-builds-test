@@ -43,7 +43,11 @@ jobs:
       - run: npm rebuild
 
       # TNS BUILD
-      - run: tns build android
+      - run: tns build android --copy-to ~/output/app.apk
+
+      # Expose artifacts
+      - store_artifacts:
+          path: ~/output
 
       # CACHE
       - save_cache:
