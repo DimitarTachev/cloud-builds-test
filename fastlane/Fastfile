@@ -7,8 +7,6 @@ platform :ios do
 
  desc 'Build the iOS application.'
  lane :build do
-    sh("tns", "prepare", "ios")
-
     match(type: "development")
 
     build_app(
