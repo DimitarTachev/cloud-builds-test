@@ -13,11 +13,18 @@ jobs:
       - run: echo 'export PATH=~/npm_prefix/bin:$PATH' >> $BASH_ENV
       - run: npm config set prefix ~/npm_prefix
 
-      # setup TNS
-      # TODO: CACHE
-      - run: npm i -g nativescript
+      # setup global modules - TNS
+      - restore_cache:
+          keys:
+            - global-modules-6.2.2
+      - run: tns --version || npm i -g nativescript@6.2.2
       - run: tns usage-reporting disable
       - run: tns error-reporting disable
+      - save_cache:
+          # TODO: add platforms cache?
+          paths:
+            - ~/npm_prefix
+          key: global-modules-6.2.2
 
       # LOCAL OPERATIONS
 
@@ -27,8 +34,7 @@ jobs:
       - restore_cache:
           keys:
             - node-modules-{{ checksum "package-lock.json" }}
-      - run: npm install
-      - run: npm rebuild
+      - run: '[ -d "node_modules/" ] || (npm install && npm rebuild)'
       - save_cache:
           # TODO: add platforms cache?
           paths:
