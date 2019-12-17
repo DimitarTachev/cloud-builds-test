@@ -43,12 +43,12 @@ jobs:
       # INSTALL GEMS (fastlane)
       - restore_cache:
           key: gems-{{ checksum "Gemfile.lock" }}
-      - run: bundle check || (bundle install --path vendor/bundle && bundle check)
+      - run: fastlane --version || bundle install --path vendor/bundle
       - save_cache:
           key: gems-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
-
+      - run: pip install six
       - run:
           name: Fastlane
           command: bundle exec fastlane ios build
