@@ -31,21 +31,21 @@ jobs:
       # NODE PACKAGES
       - restore_cache:
           keys:
-            - node-modules-{{ checksum "package-lock.json" }}
+            - node-modules-{{ checksum "package.json" }}
       - run: '[ -d "~/repo/node_modules/" ] || (npm install && npm rebuild)'
       - save_cache:
           # TODO: add platforms cache?
           paths:
             - node_modules
             - ~/.gradle/
-          key: node-modules-{{ checksum "package-lock.json" }}
+          key: node-modules-{{ checksum "package.json" }}
 
       # INSTALL GEMS (fastlane)
       - restore_cache:
-          key: gems-{{ checksum "Gemfile.lock" }}
-      - run: fastlane --version || bundle install --path vendor/bundle
+          key: gems-{{ checksum "Gemfile" }}
+      - run: '[ -d "~/repo/vendor/bundle/" ] || bundle install --path vendor/bundle'
       - save_cache:
-          key: gems-{{ checksum "Gemfile.lock" }}
+          key: gems-{{ checksum "Gemfile" }}
           paths:
             - vendor/bundle
       - run: pip install six
