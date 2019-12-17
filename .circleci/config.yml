@@ -5,10 +5,13 @@ jobs:
       xcode: 11.3.0
     working_directory: ~/repo
     environment:
+      # TODO: set NS_SKIP_ENV_CHECK
       FL_OUTPUT_DIR: ~/output
     steps:
       # GLOBAL OPERATIONS
-
+      - add_ssh_keys:
+          fingerprints:
+            - "d8:25:e3:b4:cd:39:3f:45:29:01:94:8e:5f:15:3b:30"
       # setup NPM
       - run: echo 'export PATH=~/npm_prefix/bin:$PATH' >> $BASH_ENV
       - run: npm config set prefix ~/npm_prefix
