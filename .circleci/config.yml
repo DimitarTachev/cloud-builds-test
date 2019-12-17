@@ -17,9 +17,7 @@ jobs:
       - restore_cache:
           keys:
             - global-modules-6.2.2
-      - run: tns --version || npm i -g nativescript@6.2.2
-      - run: tns usage-reporting disable
-      - run: tns error-reporting disable
+      - run: tns --version || (npm i -g nativescript@6.2.2 && tns usage-reporting disable && tns error-reporting disable)
       - save_cache:
           # TODO: add platforms cache?
           paths:
@@ -45,7 +43,7 @@ jobs:
       # INSTALL GEMS (fastlane)
       - restore_cache:
           key: gems-{{ checksum "Gemfile.lock" }}
-      - run: bundle check || bundle install --path vendor/bundle
+      - run: bundle check || (bundle install --path vendor/bundle && bundle check)
       - save_cache:
           key: gems-{{ checksum "Gemfile.lock" }}
           paths:
