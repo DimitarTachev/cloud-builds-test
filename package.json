@@ -1,6 +1,6 @@
 {
   "nativescript": {
-    "id": "org.nativescript.cloudBuilds",
+    "id": "org.nativescript.tsApp1",
     "tns-android": {
       "version": "6.2.0"
     },

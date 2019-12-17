@@ -1,0 +1,22 @@
+fastlane_version '2.137.0'
+
+platform :ios do
+ before_all do
+   setup_circle_ci
+ end
+
+ desc 'Build the iOS application.'
+ lane :build do
+    sh("tns", "prepare", "ios")
+
+    match(type: "development")
+
+    build_app(
+      scheme: "cloudbuildstest",
+      workspace: './platforms/ios/cloudbuildstest.xcworkspace',
+      export_method: 'development',
+      configuration: "Debug"
+    )
+ end
+
+end
