@@ -49,8 +49,7 @@ jobs:
           paths:
             - vendor/bundle
       - run: pip install six
-      - run: pod --version
-      - run: python -m site
+      - run: pod repo update
       - run:
           name: Fastlane
           command: bundle exec fastlane ios build
