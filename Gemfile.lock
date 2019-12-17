@@ -153,6 +153,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  CFPropertyList (= 3.0.2)
   fastlane (= 2.137.0)
 
 BUNDLED WITH
