@@ -3,13 +3,53 @@ jobs:
   build:
     macos:
       xcode: 11.3.0
+    working_directory: ~/repo
+    environment:
+      FL_OUTPUT_DIR: ~/output
     steps:
+      # GLOBAL OPERATIONS
+
+      # setup NPM
+      - run: echo 'export PATH=~/npm_prefix/bin:$PATH' >> $BASH_ENV
+      - run: npm config set prefix ~/npm_prefix
+
+      # setup TNS
+      # TODO: CACHE
+      - run: npm i -g nativescript
+      - run: tns usage-reporting disable
+      - run: tns error-reporting disable
+
+      # LOCAL OPERATIONS
+
       - checkout
-      - run: echo Hello
-      - run: bundle install
+
+      # NODE PACKAGES
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run: npm install
+      - run: npm rebuild
+
+      # INSTALL GEMS (fastlane)
+      - restore_cache:
+          key: 1-gems-{{ checksum "Gemfile.lock" }}
+      - run: bundle check || bundle install --path vendor/bundle
+      - save_cache:
+          key: 1-gems-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
       - run:
           name: Fastlane
           command: bundle exec fastlane ios build
+
+      # store artifacts
+      - store_artifacts:
+          path: ~/output
+      - store_test_results:
+          path: ~/output/scan
 
 workflows:
   version: 2

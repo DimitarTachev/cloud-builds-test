@@ -12,7 +12,8 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
+fastlane/README.md
+fastlane/report.xml
 # General
 .DS_Store
 .AppleDouble

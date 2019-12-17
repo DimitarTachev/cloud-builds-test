@@ -1,0 +1,18 @@
+git_url("git@github.com:DimitarTachev/ios-signing.git")
+
+storage_mode("git")
+
+type("development") # The default type, can be: appstore, adhoc, enterprise or development
+
+app_identifier(["org.nativescript.tsApp1"])
+username("dimitar.tachev@progress.com") # Your Apple Developer Portal username
+
+team_id('W7TGC3P93K')
+team_name('Telerik AD')
+
+# For all available options run `fastlane match --help`
+# Remove the # in the beginning of the line to enable the other options
+
+# The docs are available on https://docs.fastlane.tools/actions/match
+
+
