@@ -50,6 +50,7 @@ jobs:
             - vendor/bundle
       - run: pip install six
       - run: pod repo update
+      - run: tns doctor --log trace
       - run:
           name: Fastlane
           command: bundle exec fastlane ios build
