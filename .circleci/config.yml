@@ -45,13 +45,13 @@ jobs:
           key: node-modules-{{ checksum "package.json" }}
 
       # INSTALL GEMS (fastlane)
-      - restore_cache:
-          key: gems-{{ checksum "Gemfile" }}
-      # - run: '[ -d "vendor/bundle/" ] || bundle install --path vendor/bundle'
-      - save_cache:
-          key: gems-{{ checksum "Gemfile" }}
-          paths:
-            - vendor/bundle
+      # - restore_cache:
+      #     key: gems-{{ checksum "Gemfile" }}
+      - run: bundle install --path vendor/bundle
+      # - save_cache:
+      #     key: gems-{{ checksum "Gemfile" }}
+      #     paths:
+      #       - vendor/bundle
       - run: pip install six
       - run: pod repo update
       - run: tns prepare ios
