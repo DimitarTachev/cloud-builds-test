@@ -46,7 +46,7 @@ jobs:
       # INSTALL GEMS (fastlane)
       - restore_cache:
           key: gems-{{ checksum "Gemfile" }}
-      - run: '[ -d "~/cloudbuildstest/vendor/bundle/" ] || bundle install --path vendor/bundle'
+      - run: '[ -d "vendor/bundle/" ] || bundle install --path vendor/bundle'
       - save_cache:
           key: gems-{{ checksum "Gemfile" }}
           paths:
@@ -54,7 +54,6 @@ jobs:
       - run: pip install six
       - run: pod repo update
       - run: tns prepare ios
-      - run: ls -la ./platforms/ios
       - run:
           name: Fastlane
           command: bundle exec fastlane ios build
@@ -62,6 +61,8 @@ jobs:
       # store artifacts
       - store_artifacts:
           path: ~/output
+      - store_artifacts:
+          path: ~/cloudbuildstest/platforms/ios
       - store_test_results:
           path: ~/output/scan
 

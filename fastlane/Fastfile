@@ -13,7 +13,8 @@ platform :ios do
       scheme: "cloudbuildstest",
       workspace: './platforms/ios/cloudbuildstest.xcworkspace',
       export_method: 'development',
-      configuration: "Debug"
+      configuration: "Debug",
+      xcargs: "-allowProvisioningUpdates"
     )
  end
 
