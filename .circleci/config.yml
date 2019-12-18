@@ -7,6 +7,7 @@ jobs:
     environment:
       # TODO: set NS_SKIP_ENV_CHECK
       FL_OUTPUT_DIR: ~/output
+    shell: /bin/bash --login -o pipefail
     steps:
       # GLOBAL OPERATIONS
       - add_ssh_keys:
@@ -20,7 +21,7 @@ jobs:
       - restore_cache:
           keys:
             - global-modules-6.2.2
-      - run: tns --version || (npm i -g nativescript@6.2.2 && tns usage-reporting disable && tns error-reporting disable)
+      # - run: tns --version || (npm i -g nativescript@6.2.2 && tns usage-reporting disable && tns error-reporting disable)
       - save_cache:
           # TODO: add platforms cache?
           paths:
@@ -35,7 +36,7 @@ jobs:
       - restore_cache:
           keys:
             - node-modules-{{ checksum "package.json" }}
-      - run: '[ -d "~/cloudbuildstest/node_modules/" ] || (npm install && npm rebuild)'
+      # - run: '[ -d "~/cloudbuildstest/node_modules/" ] || (npm install && npm rebuild)'
       - save_cache:
           # TODO: add platforms cache?
           paths:
@@ -46,7 +47,7 @@ jobs:
       # INSTALL GEMS (fastlane)
       - restore_cache:
           key: gems-{{ checksum "Gemfile" }}
-      - run: '[ -d "vendor/bundle/" ] || bundle install --path vendor/bundle'
+      # - run: '[ -d "vendor/bundle/" ] || bundle install --path vendor/bundle'
       - save_cache:
           key: gems-{{ checksum "Gemfile" }}
           paths:
@@ -61,8 +62,6 @@ jobs:
       # store artifacts
       - store_artifacts:
           path: ~/output
-      - store_artifacts:
-          path: ~/cloudbuildstest/platforms/ios
       - store_test_results:
           path: ~/output/scan
 
