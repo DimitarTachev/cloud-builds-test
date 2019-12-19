@@ -36,7 +36,7 @@ jobs:
       - restore_cache:
           keys:
             - node-modules-{{ checksum "package.json" }}
-      # - run: '[ -d "~/cloudbuildstest/node_modules/" ] || (npm install && npm rebuild)'
+      - run: '[ -d "~/cloudbuildstest/node_modules/" ] || (npm install && npm rebuild)'
       - save_cache:
           # TODO: add platforms cache?
           paths:
